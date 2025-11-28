@@ -1,3 +1,7 @@
+# Eventlet monkey patching must be done FIRST before any other imports
+import eventlet
+eventlet.monkey_patch()
+
 import os
 from functools import wraps
 from flask import Flask, jsonify, request, send_from_directory, session, render_template
@@ -18,8 +22,8 @@ app = Flask(__name__,
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
 # Initialize SocketIO with CORS support
-# Using threading mode for Python 3.13 compatibility (eventlet has issues with Python 3.13)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+# Using eventlet mode with proper monkey patching
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 # Initialize Supabase Client
 url: str = os.environ.get("SUPABASE_URL")
