@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Project - Hackathon</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <style>
+        #three-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+        #app {
+            position: relative;
+            z-index: 1;
+        }
+        .form-container {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .input-field {
+            background: rgba(31, 41, 55, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: rgba(59, 130, 246, 0.8);
+            background: rgba(31, 41, 55, 0.9);
+            outline: none;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-auto">
+    <!-- Three.js background canvas -->
+    <div id="three-bg"></div>
+
+    <!-- Main application container -->
+    <div id="app" class="relative min-h-screen p-4 md:p-8 flex items-center justify-center">
+        <div class="form-container w-full max-w-2xl p-8 rounded-lg shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2 text-center" style="font-family: 'Orbitron', sans-serif;">
+                Submit Your Project
+            </h1>
+            <br>
+            <br>    
+            
+            <form id="submission-form" class="space-y-6">
+                <!-- Team Name -->
+                <div>
+                    <label for="team-name" class="block text-sm font-medium mb-2" style="font-family: 'Orbitron', sans-serif;">
+                        Team Name <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="team-name" 
+                        name="team_name" 
+                        required
+                        class="input-field w-full px-4 py-3 rounded-lg text-white"
+                        placeholder="Enter your team name"
+                    />
+                </div>
+
+                <!-- Project Name -->
+                <div>
+                    <label for="project-name" class="block text-sm font-medium mb-2" style="font-family: 'Orbitron', sans-serif;">
+                        Project Name <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="project-name" 
+                        name="project_name" 
+                        required
+                        class="input-field w-full px-4 py-3 rounded-lg text-white"
+                        placeholder="Enter your project name"
+                    />
+                </div>
+
+                <!-- Project Description -->
+                <div>
+                    <label for="project-description" class="block text-sm font-medium mb-2" style="font-family: 'Orbitron', sans-serif;">
+                        Project Description <span class="text-red-500">*</span>
+                    </label>
+                    <textarea 
+                        id="project-description" 
+                        name="project_description" 
+                        required
+                        rows="6"
+                        class="input-field w-full px-4 py-3 rounded-lg text-white resize-vertical"
+                        placeholder="Describe your project, its features, and what makes it special..."
+                    ></textarea>
+                </div>
+
+                <!-- GitHub Link -->
+                <div>
+                    <label for="github-link" class="block text-sm font-medium mb-2" style="font-family: 'Orbitron', sans-serif;">
+                        GitHub Repository Link <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="url" 
+                        id="github-link" 
+                        name="github_link" 
+                        required
+                        class="input-field w-full px-4 py-3 rounded-lg text-white"
+                        placeholder="https://github.com/username/repo"
+                        pattern="https?://.+"
+                    />
+                </div>
+
+                <!-- Success/Error Messages -->
+                <div id="message-container" class="hidden">
+                    <div id="message" class="p-4 rounded-lg text-center font-medium"></div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex gap-4">
+                    <button 
+                        type="submit" 
+                        id="submit-btn"
+                        class="submit-btn flex-1 py-3 px-6 rounded-lg font-bold text-white text-lg"
+                        style="font-family: 'Orbitron', sans-serif;"
+                    >
+                        Submit Project
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/assets/js/background.js"></script>
+    <script src="/assets/js/submit.js"></script>
+</body>
+</html>

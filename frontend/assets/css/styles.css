@@ -1,0 +1,63 @@
+/* Custom styles for readability and aesthetics */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Titan+One&display=swap');
+
+#timer-display {
+    font-family: "Orbitron", sans-serif;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+#team-list .bg-gray-800,
+#note-container{
+    font-family: "Orbitron", sans-serif;
+    font-weight: 150;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+#teams-container {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#team-list {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(59, 130, 246, 0.5) rgba(31, 41, 55, 0.5);
+}
+
+#team-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#team-list::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.5);
+    border-radius: 4px;
+}
+
+#team-list::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 4px;
+}
+
+#team-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.7);
+}
+
+#event-note,
+#team-list div {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Infinite scrolling animation */
+@keyframes scroll-up {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+#team-list.scrolling {
+    display: flex;
+    flex-direction: column;
+    animation: scroll-up 20s linear infinite;
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Submissions - Hackathon</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <style>
+        #three-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+        #app {
+            position: relative;
+            z-index: 1;
+        }
+        .submissions-container {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .team-section {
+            background: rgba(31, 41, 55, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        .team-section:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+        }
+        .project-card {
+            background: rgba(17, 24, 39, 0.9);
+            border-left: 4px solid #667eea;
+        }
+        .github-link {
+            color: #60a5fa;
+            transition: color 0.2s ease;
+        }
+        .github-link:hover {
+            color: #93c5fd;
+        }
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .loading-spinner {
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn-edit {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-edit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        .btn-delete {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+        .modal {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: rgba(17, 24, 39, 0.95);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+        .submission-index {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-auto">
+    <!-- Three.js background canvas -->
+    <div id="three-bg"></div>
+
+    <!-- Main application container -->
+    <div id="app" class="relative min-h-screen p-4 md:p-8">
+        <div class="submissions-container max-w-6xl mx-auto p-8 rounded-lg shadow-2xl">
+            <!-- Header -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-4xl md:text-5xl font-bold" style="font-family: 'Orbitron', sans-serif;">
+                        Project Submissions
+                    </h1>
+                    <div class="flex gap-4 items-center">
+                        <span id="user-email" class="text-sm text-gray-400"></span>
+                        <button 
+                            id="logout-btn"
+                            class="bg-red-600 hover:bg-red-700 py-2 px-6 rounded-lg font-bold text-white transition"
+                            style="font-family: 'Orbitron', sans-serif;"
+                        >
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="flex flex-col items-center justify-center py-12">
+                <div class="loading-spinner"></div>
+                <p class="mt-4 text-gray-400">Loading submissions...</p>
+            </div>
+
+            <!-- No Submissions State -->
+            <div id="no-submissions" class="hidden text-center py-12">
+                <svg class="mx-auto h-24 w-24 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h3 class="text-xl font-semibold mb-2" style="font-family: 'Orbitron', sans-serif;">No Submissions Yet</h3>
+                <p class="text-gray-400">Be the first to submit your project!</p>
+            </div>
+
+            <!-- Submissions List -->
+            <div id="submissions-list" class="space-y-6 hidden">
+                <!-- Team sections will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-content max-w-2xl w-full p-8 rounded-lg shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400" style="font-family: 'Orbitron', sans-serif;">Edit Submission</h2>
+            <form id="edit-form" class="space-y-4">
+                <input type="hidden" id="edit-id" />
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Team Name</label>
+                    <input type="text" id="edit-team-name" required
+                        class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Project Name</label>
+                    <input type="text" id="edit-project-name" required
+                        class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Project Description</label>
+                    <textarea id="edit-project-description" rows="4" required
+                        class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">GitHub Link</label>
+                    <input type="url" id="edit-github-link" required
+                        class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white">
+                </div>
+                
+                <div class="flex gap-4 mt-6">
+                    <button type="submit" class="flex-1 btn-edit py-3 px-6 rounded-lg font-bold text-white">
+                        Save Changes
+                    </button>
+                    <button type="button" id="cancel-edit" class="flex-1 bg-gray-700 hover:bg-gray-600 py-3 px-6 rounded-lg font-bold text-white transition">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/assets/js/background.js"></script>
+    <script src="/assets/js/submissions.js"></script>
+</body>
+</html>

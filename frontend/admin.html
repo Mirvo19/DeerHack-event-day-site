@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - DeeraHack</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        #three-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+        #admin-app {
+            position: relative;
+            z-index: 1;
+        }
+        .draggable {
+            touch-action: none;
+            user-select: none;
+        }
+        .resize-drag {
+            border: 2px dashed #4a5568;
+            border-radius: 0.25rem;
+        }
+        .login-container {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(17, 24, 39, 0.9);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+        .login-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .admin-card {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.5);
+            transition: all 0.3s ease;
+        }
+        .admin-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .gradient-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-success:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-warning:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+        .btn-purple {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-purple:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+        .btn-indigo {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-indigo:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+        .input-field {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.5);
+            transition: all 0.2s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Three.js background canvas -->
+    <div id="three-bg"></div>
+    
+    <div id="admin-app" class="container mx-auto p-4 md:p-8">
+        <!-- App content is rendered by admin.js -->
+        <div id="auth-container"></div>
+        <div id="dashboard-container" class="hidden">
+            <!-- Admin dashboard will be rendered here -->
+        </div>
+    </div>
+
+    <!-- Using jQuery for simplicity in AJAX calls -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- interact.js for drag-and-drop functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <!-- Socket.IO client for WebSocket support -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="/assets/js/background.js"></script>
+    <script src="/assets/js/admin.js"></script>
+</body>
+</html>
