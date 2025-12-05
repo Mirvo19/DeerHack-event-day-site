@@ -93,12 +93,20 @@ def index():
 def admin_page():
     return send_from_directory(app.template_folder, 'admin.html')
 
-@app.route('/submit.html')
+
 @app.route('/submit')
 def submit_page():
     return send_from_directory(app.template_folder, 'submit.html')
 
-@app.route('/submissions.html')
+
+@app.route('/landing')
+def landing_page():
+    return send_from_directory(app.template_folder, 'landing.html')
+
+@app.route('/land-logo.png')
+def serve_landing_logo():
+    return send_from_directory(app.template_folder, 'land-logo.png')
+
 @app.route('/submissions')
 @submissions_admin_required
 def submissions_page():
