@@ -4,7 +4,7 @@
 #timer-display {
     font-family: "Orbitron", sans-serif;
     font-weight: 500;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
 #team-list .bg-gray-800,
