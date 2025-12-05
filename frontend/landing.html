@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Display</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+     <div id="three-bg"></div>
+ <div id="app" class="relative min-h-screen p-4 md:p-8">
+    <!-- Logo with higher z-index to appear above timer -->
+    <div class="absolute" style="top: 3.5%; left: 40%; width: 15%; height: 20%; z-index: 10;">
+        <img src="/land-logo.png" alt="DeerHack Logo">
+    </div>
+    
+    <!-- Timer Container -->
+    <div id="timer-container" class="absolute" style="top: 5%; left: 23%; width: 55%; height: 60%; z-index: 1;">
+        <div class="relative w-full h-full">
+            <div id="timer-display" class="absolute inset-0 flex items-center justify-center font-bold">
+                <h1 style="font-size: 60px;">
+                    DeerHack School-Edition 2025
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        // Inject Supabase credentials from server-side template
+        window.SUPABASE_URL = "{{ supabase_url }}";
+        window.SUPABASE_ANON_KEY = "{{ supabase_anon_key }}";
+    </script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="/assets/js/background.js"></script>
+    <script src="/assets/js/app.js"></script>
+</body>
+</html>
